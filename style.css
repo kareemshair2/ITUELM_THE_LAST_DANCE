@@ -1,0 +1,532 @@
+/* ═══════════════════════════════════════════
+   ITUELM — Cinematic Intro
+   Exact Match to Reference Image
+   Deep Dark / Neon Blue Outline / Mystical Energy
+   ═══════════════════════════════════════════ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --neon-blue: #0088ff;
+    --neon-cyan: #00ccff;
+    --deep-blue: #0044aa;
+    --electric-blue: #0066ff;
+    --ice-blue: #66bbff;
+    --pure-black: #000000;
+    --near-black: #010103;
+    --dark-bg: #000205;
+    --glow-blue: rgba(0, 136, 255, 0.7);
+    --glow-cyan: rgba(0, 204, 255, 0.5);
+    --glow-white: rgba(180, 220, 255, 0.3);
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--pure-black);
+    font-family: 'Orbitron', sans-serif;
+    cursor: default;
+}
+
+/* ── Canvas Particles ── */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ── Deep Dark Background Layers ── */
+.bg-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bg-dark {
+    background: 
+        radial-gradient(ellipse at 20% 80%, rgba(0, 40, 100, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 30, 80, 0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(0, 20, 60, 0.05) 0%, transparent 60%);
+}
+
+/* ── Fog / Mist Layers ── */
+.fog-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+}
+
+.fog-1 {
+    background: radial-gradient(ellipse at 30% 75%, rgba(0, 80, 180, 0.12) 0%, transparent 55%);
+    animation: fogDrift1 22s ease-in-out infinite;
+}
+
+.fog-2 {
+    background: radial-gradient(ellipse at 70% 25%, rgba(0, 60, 150, 0.08) 0%, transparent 45%);
+    animation: fogDrift2 28s ease-in-out infinite;
+}
+
+.fog-3 {
+    background: radial-gradient(ellipse at 50% 85%, rgba(0, 50, 130, 0.1) 0%, transparent 50%);
+    animation: fogDrift3 19s ease-in-out infinite;
+}
+
+@keyframes fogDrift1 {
+    0%, 100% { transform: translateX(-6%) scale(1); }
+    50% { transform: translateX(6%) scale(1.12); }
+}
+
+@keyframes fogDrift2 {
+    0%, 100% { transform: translateX(4%) scale(1); }
+    50% { transform: translateX(-4%) scale(1.06); }
+}
+
+@keyframes fogDrift3 {
+    0%, 100% { transform: translateY(-3%) scale(1); }
+    50% { transform: translateY(3%) scale(1.1); }
+}
+
+/* ── Scene Container ── */
+.scene {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Scene 1: ITUELM First ── */
+.scene-1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+/* Arabic word "عظيم" — positioned above T */
+.arabic-word {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--ice-blue);
+    text-shadow: 
+        0 0 15px var(--glow-blue),
+        0 0 35px var(--glow-cyan),
+        0 0 70px rgba(0, 136, 255, 0.35),
+        0 0 100px rgba(0, 100, 200, 0.15);
+    opacity: 0;
+    transform: translateY(25px);
+    margin-bottom: -0.3rem;
+    letter-spacing: 0.15em;
+    position: relative;
+    z-index: 12;
+}
+
+/* Main Title ITUELM — Exact neon outline style */
+.main-title {
+    display: flex;
+    gap: clamp(0.4rem, 1.2vw, 1rem);
+    position: relative;
+    z-index: 11;
+}
+
+/* Each letter: dark fill + bright neon outline */
+.letter {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(4.5rem, 15vw, 13rem);
+    font-weight: 900;
+    color: rgba(0, 10, 30, 0.85);
+    -webkit-text-stroke: 2.5px var(--neon-blue);
+    text-stroke: 2.5px var(--neon-blue);
+    position: relative;
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px) scale(0.75);
+    filter: blur(10px);
+    text-shadow:
+        0 0 5px rgba(0, 136, 255, 0.3),
+        0 0 15px rgba(0, 136, 255, 0.2),
+        0 0 30px rgba(0, 100, 200, 0.1);
+}
+
+/* Inner glow layer */
+.letter::before {
+    content: attr(data-letter);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--neon-cyan);
+    text-stroke: 1.5px var(--neon-cyan);
+    opacity: 0;
+    filter: blur(8px);
+    transform: scale(1.02);
+    pointer-events: none;
+}
+
+/* Outer bloom layer */
+.letter::after {
+    content: attr(data-letter);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    -webkit-text-stroke: 4px var(--deep-blue);
+    text-stroke: 4px var(--deep-blue);
+    opacity: 0;
+    filter: blur(25px);
+    transform: scale(1.08);
+    pointer-events: none;
+}
+
+/* Title reflection on wet ground */
+.title-reflection {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(4.5rem, 15vw, 13rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0, 136, 255, 0.15);
+    text-stroke: 1px rgba(0, 136, 255, 0.15);
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%) scaleY(-1);
+    opacity: 0;
+    filter: blur(6px);
+    pointer-events: none;
+    letter-spacing: clamp(0.4rem, 1.2vw, 1rem);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 100%);
+}
+
+/* Ground glow beneath text — like reference */
+.ground-glow {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 100px;
+    background: radial-gradient(ellipse, rgba(0, 136, 255, 0.25) 0%, rgba(0, 80, 180, 0.1) 30%, transparent 70%);
+    filter: blur(40px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Energy burst from ground */
+.ground-burst {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 60px;
+    background: radial-gradient(ellipse, rgba(0, 180, 255, 0.4) 0%, rgba(0, 100, 200, 0.15) 40%, transparent 70%);
+    filter: blur(20px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ── Scene 2: "THAT WAS THE LAST DANCE" ── */
+.scene-2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.subtitle-line {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.3rem, 3.8vw, 3rem);
+    font-weight: 200;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(180, 210, 255, 0.75);
+    text-shadow: 
+        0 0 25px rgba(0, 136, 255, 0.15),
+        0 0 50px rgba(0, 80, 180, 0.08);
+    opacity: 0;
+    transform: translateY(35px);
+    text-align: center;
+    padding: 0 2rem;
+}
+
+/* ── Scene 3: ITUELM Final ── */
+.scene-3 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.final-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(5.5rem, 19vw, 17rem);
+    font-weight: 900;
+    color: rgba(0, 15, 40, 0.9);
+    -webkit-text-stroke: 3px var(--neon-blue);
+    text-stroke: 3px var(--neon-blue);
+    opacity: 0;
+    transform: scale(0.65);
+    letter-spacing: clamp(0.6rem, 2.2vw, 1.8rem);
+    position: relative;
+    text-shadow:
+        0 0 10px rgba(0, 136, 255, 0.5),
+        0 0 30px rgba(0, 136, 255, 0.3),
+        0 0 60px rgba(0, 100, 200, 0.2),
+        0 0 100px rgba(0, 80, 180, 0.1);
+}
+
+.final-title::before {
+    content: 'ITUELM';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--neon-cyan);
+    text-stroke: 2px var(--neon-cyan);
+    filter: blur(12px);
+    opacity: 0;
+    transform: scale(1.03);
+    pointer-events: none;
+}
+
+.final-title::after {
+    content: 'ITUELM';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    -webkit-text-stroke: 5px var(--deep-blue);
+    text-stroke: 5px var(--deep-blue);
+    filter: blur(30px);
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.final-reflection {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(5.5rem, 19vw, 17rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0, 136, 255, 0.12);
+    text-stroke: 1px rgba(0, 136, 255, 0.12);
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%) scaleY(-1);
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+    letter-spacing: clamp(0.6rem, 2.2vw, 1.8rem);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 100%);
+}
+
+/* ── Vignette — Deep Dark Corners ── */
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.75) 100%);
+}
+
+/* ── Bloom Layer ── */
+.bloom-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 49;
+    background: radial-gradient(ellipse at 50% 55%, rgba(0, 136, 255, 0.04) 0%, transparent 55%);
+    opacity: 0;
+    mix-blend-mode: screen;
+}
+
+/* ── Pulse Animation — Cinematic Breathing ── */
+.pulsing .letter {
+    animation: letterPulse 2.8s ease-in-out infinite;
+}
+
+.pulsing .letter:nth-child(1) { animation-delay: 0s; }
+.pulsing .letter:nth-child(2) { animation-delay: 0.12s; }
+.pulsing .letter:nth-child(3) { animation-delay: 0.24s; }
+.pulsing .letter:nth-child(4) { animation-delay: 0.36s; }
+.pulsing .letter:nth-child(5) { animation-delay: 0.48s; }
+.pulsing .letter:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes letterPulse {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+        -webkit-text-stroke: 2.5px var(--neon-blue);
+        text-shadow:
+            0 0 5px rgba(0, 136, 255, 0.3),
+            0 0 15px rgba(0, 136, 255, 0.2),
+            0 0 30px rgba(0, 100, 200, 0.1);
+    }
+    30% {
+        transform: translateY(-4px) scale(1.035);
+        filter: blur(0px);
+        -webkit-text-stroke: 2.5px var(--neon-cyan);
+        text-shadow:
+            0 0 10px rgba(0, 204, 255, 0.5),
+            0 0 25px rgba(0, 136, 255, 0.4),
+            0 0 50px rgba(0, 100, 200, 0.25),
+            0 0 80px rgba(0, 80, 180, 0.15);
+    }
+    55% {
+        transform: translateY(-1px) scale(1.01);
+        filter: blur(0px);
+        -webkit-text-stroke: 2.5px var(--neon-blue);
+        text-shadow:
+            0 0 8px rgba(0, 136, 255, 0.4),
+            0 0 20px rgba(0, 136, 255, 0.25),
+            0 0 40px rgba(0, 100, 200, 0.15);
+    }
+}
+
+/* Final pulse — More intense, majestic */
+.final-pulsing .final-title {
+    animation: finalPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes finalPulse {
+    0%, 100% {
+        transform: scale(1);
+        -webkit-text-stroke: 3px var(--neon-blue);
+        text-shadow:
+            0 0 10px rgba(0, 136, 255, 0.5),
+            0 0 30px rgba(0, 136, 255, 0.3),
+            0 0 60px rgba(0, 100, 200, 0.2);
+    }
+    25% {
+        transform: scale(1.045);
+        -webkit-text-stroke: 3px var(--neon-cyan);
+        text-shadow:
+            0 0 15px rgba(0, 204, 255, 0.6),
+            0 0 40px rgba(0, 136, 255, 0.45),
+            0 0 80px rgba(0, 100, 200, 0.3),
+            0 0 120px rgba(0, 80, 180, 0.15);
+    }
+    55% {
+        transform: scale(1.015);
+        -webkit-text-stroke: 3px var(--neon-blue);
+        text-shadow:
+            0 0 12px rgba(0, 136, 255, 0.55),
+            0 0 35px rgba(0, 136, 255, 0.35),
+            0 0 70px rgba(0, 100, 200, 0.25);
+    }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .letter {
+        -webkit-text-stroke: 2px var(--neon-blue);
+        text-stroke: 2px var(--neon-blue);
+        font-size: clamp(3rem, 12vw, 8rem);
+    }
+
+    .main-title {
+        gap: 0.25rem;
+    }
+
+    .subtitle-line {
+        letter-spacing: 0.25em;
+        font-size: clamp(1rem, 4.5vw, 1.6rem);
+    }
+
+    .arabic-word {
+        font-size: clamp(1.4rem, 5.5vw, 2.2rem);
+    }
+
+    .final-title {
+        -webkit-text-stroke: 2px var(--neon-blue);
+        text-stroke: 2px var(--neon-blue);
+    }
+}
+
+@media (max-width: 480px) {
+    .letter {
+        -webkit-text-stroke: 1.5px var(--neon-blue);
+        text-stroke: 1.5px var(--neon-blue);
+        font-size: clamp(2.5rem, 10vw, 6rem);
+    }
+
+    .main-title {
+        gap: 0.15rem;
+    }
+}
+
+/* ── Energy crackle on letters ── */
+.letter.energized::before {
+    animation: energyCrackle 0.12s ease-in-out infinite alternate;
+}
+
+@keyframes energyCrackle {
+    0% { opacity: 0.25; transform: scale(1.02) translateX(-1px); }
+    100% { opacity: 0.55; transform: scale(1.04) translateX(1px); }
+}
+
+/* ── Fade overlay for transitions ── */
+.fade-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--pure-black);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+}

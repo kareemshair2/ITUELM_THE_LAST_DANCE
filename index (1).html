@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITUELM — The Last Dance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Naskh+Arabic:wght@700&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Deep dark background -->
+    <div class="bg-layer bg-dark"></div>
+
+    <!-- Canvas for particle system -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Fog layers -->
+    <div class="fog-layer fog-1"></div>
+    <div class="fog-layer fog-2"></div>
+    <div class="fog-layer fog-3"></div>
+
+    <!-- Main scene container -->
+    <div class="scene">
+
+        <!-- Scene 1: ITUELM First Appearance -->
+        <div class="scene-1" id="scene1">
+            <div class="arabic-word" id="arabic-word">عظيم</div>
+            <div class="main-title" id="main-title">
+                <span class="letter" data-letter="M">M</span>
+                <span class="letter" data-letter="L">L</span>
+                <span class="letter" data-letter="E">E</span>
+                <span class="letter" data-letter="U">U</span>
+                <span class="letter" data-letter="T">T</span>
+                <span class="letter" data-letter="I">I</span>
+            </div>
+            <div class="title-reflection" id="title-reflection">ITUELM</div>
+            <div class="ground-glow" id="ground-glow"></div>
+            <div class="ground-burst" id="ground-burst"></div>
+        </div>
+
+        <!-- Scene 2: "THAT WAS THE LAST DANCE" -->
+        <div class="scene-2" id="scene2">
+            <div class="subtitle-line" id="subtitle-line">THAT WAS THE LAST DANCE</div>
+        </div>
+
+        <!-- Scene 3: ITUELM Final -->
+        <div class="scene-3" id="scene3">
+            <div class="final-title" id="final-title">ITUELM</div>
+            <div class="final-reflection" id="final-reflection">ITUELM</div>
+        </div>
+
+    </div>
+
+    <!-- Vignette overlay -->
+    <div class="vignette"></div>
+
+    <!-- Bloom overlay -->
+    <div class="bloom-layer"></div>
+
+    <script src="particles.js"></script>
+    <script src="animations.js"></script>
+</body>
+</html>
