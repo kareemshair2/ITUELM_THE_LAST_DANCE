@@ -343,7 +343,7 @@ class CinematicDirector {
                 this.finalReflection.style.opacity = eased * 0.18;
 
                 // Bloom intensifies
-                this.bloomLayer.style.opacity = 1 + eased * 0.8;
+                this.bloomLayer.style.opacity = 0.75 + eased * 0.25;
 
                 if (progress < 1) {
                     requestAnimationFrame(animateFinal);
